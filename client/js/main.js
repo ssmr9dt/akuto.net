@@ -7,7 +7,9 @@
         height: 720,
         scene: {
             preload: preload,
-            create: create
+            create: create,
+            update: update,
+            render: render
         }
     };
     var game = new Phaser.Game(config);
@@ -24,6 +26,9 @@
         
         var rect = new Phaser.Geom.Rectangle(32, 32, 128, 256);
     }
+    
+    function update(){}
+    function render(){}
 
 /*
 
