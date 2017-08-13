@@ -9,6 +9,9 @@ const io = socketio.listen(server);
 
 router.use("/phaser", express.static(path.resolve(__dirname, "node_modules/phaser/build/")));
 router.use(express.static(path.resolve(__dirname, "client")));
+
+// router.use(express.static(path.resolve(__dirname, "client2/phaser-fullscreen/html")));
+
 var sockets = [];
 
 io.on("connection", function(socket){

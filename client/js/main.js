@@ -1,140 +1,15 @@
 (function(){
-    var $stage = document.getElementById("stage");
-    var config = {
-        type: Phaser.CANVAS,
-        parent: $stage,
-        width: 1280,
-        height: 720,
-        scene: {
-            preload: preload,
-            create: create,
-            update: update,
-            render: render
-        }
-    };
-    var game = new Phaser.Game(config);
+
+    const $stage = document.getElementById("stage");
+    const w = 1080;
+    const h = 1920;
+    const game = new Phaser.Game(w, h, Phaser.AUTO, $stage);
     
-
-
-    function preload () {
-        // game.load.image('logo', 'phaser.png');
-    }
+    game.state.add("Boot", Akutonet.Boot);
+    game.state.add("Preload", Akutonet.Preload);
+    game.state.add("Create", Akutonet.Create);
+    game.state.add("Game", Akutonet.Game);
     
-    function create () {
-        // var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-        // logo.anchor.setTo(0.5, 0.5);
-        
-        var rect = new Phaser.Geom.Rectangle(32, 32, 128, 256);
-    }
-    
-    function update(){}
-    function render(){}
+    game.state.start("Boot");
 
-/*
-
-//     this.$stage = document.getElementById("stage");
-// this.game = new Phaser.Game("100", "100", Phaser.AUTO, this.$stage,
-//         {
-//             preload: this.preload,
-//             create: this.create,
-//             update: this.update,
-//             render: this.render
-//         });
-
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
-
-function preload() {
-
-    game.load.tilemap('map', 'assets/tilemaps/maps/tile_properties.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles', 'assets/tilemaps/tiles/gridtiles.png');
-
-}
-
-var map;
-var layer;
-var marker;
-
-// var sprite;
-var cursors;
-var currentDataString;
-
-function create() {
-
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    map = game.add.tilemap('map');
-
-    map.addTilesetImage('tiles');
-
-    // map.setCollisionBetween(1, 12);
-
-    layer = map.createLayer('Tile Layer 1');
-
-    layer.resizeWorld();
-
-    //  Our painting marker
-    marker = game.add.graphics();
-    marker.lineStyle(2, 0xffffff, 1);
-    marker.drawRect(0, 0, 32, 32);
-
-    game.input.addMoveCallback(updateMarker, this);
-
-    game.input.onDown.add(getTileProperties, this);
-
-    cursors = game.input.keyboard.createCursorKeys();
-
-}
-
-function getTileProperties() {
-
-    var x = layer.getTileX(game.input.activePointer.worldX);
-    var y = layer.getTileY(game.input.activePointer.worldY);
-
-    var tile = map.getTile(x, y, layer);
-    
-    // Note: JSON.stringify will convert the object tile properties to a string
-    currentDataString = JSON.stringify( tile.properties );
-
-    tile.properties.wibble = true;
-
-}
-
-function updateMarker() {
-
-    marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
-    marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
-
-}
-
-function update() {
-
-    if (cursors.left.isDown)
-    {
-        game.camera.x -= 4;
-    }
-    else if (cursors.right.isDown)
-    {
-        game.camera.x += 4;
-    }
-
-    if (cursors.up.isDown)
-    {
-        game.camera.y -= 4;
-    }
-    else if (cursors.down.isDown)
-    {
-        game.camera.y += 4;
-    }
-
-}
-
-function render() {
-
-    if(currentDataString){
-        game.debug.text('Tile properties: ' + currentDataString, 16, 550);
-    } else {
-        game.debug.text("Click on a tile to reveal the properties of the tile", 16, 550);
-    }
-}
-*/
 })();
