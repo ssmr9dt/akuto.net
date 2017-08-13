@@ -7,7 +7,7 @@ const router = express();
 const server = http.createServer(router);
 const io = socketio.listen(server);
 
-router.use("/phaser", express.static(path.resolve(__dirname, "node_modules/phaser/build/")));
+router.use("/phaser", express.static(path.resolve(__dirname, "node_modules/phaser-ce/build/")));
 router.use(express.static(path.resolve(__dirname, "client")));
 
 // router.use(express.static(path.resolve(__dirname, "client2/phaser-fullscreen/html")));
