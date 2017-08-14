@@ -7,8 +7,8 @@ Akutonet.Game.prototype = {
     
     preload: function(){
         this.game.load.image("sprite", "assets/phaser.png");
-        
-        this.game.load.image("cards", "assets/481112813.png");
+    
+        this.game.load.atlas("cards", "assets/481112813.png", "assets/481112813.json");
         
         this.scale.pageAlignHorizontally = true;
         
@@ -30,7 +30,6 @@ Akutonet.Game.prototype = {
         
         sprite.inputEnabled = true;
         sprite.input.enableDrag();
-        console.log(sprite);
         sprite.anchor.setTo(0.5, 0.5);
         
         // Akutonet.sprite = sprite;
@@ -38,20 +37,48 @@ Akutonet.Game.prototype = {
         
         Akutonet.cards = [];
         
+        var suit = ["hearts01","clubs01","diamonds01","spades01"];
         
         for (var i=0; i<4; i++) {
-            var card = this.game.add.tileSprite(200+i*200,this.world.centerY/2*3,169,247, "cards");
-            card.tilePosition.x = -283 - i*225;
-            card.tilePosition.y = -64;
+            var card = this.game.add.tileSprite(1080/4*(i+1)-1080/8,this.world.centerY+300,169,238, "cards",suit[i]);
             card.anchor.setTo(0.5,0.5);
-            card.inputEnabled = true;
-            card.input.enableDrag();
+            card.tint = 0x3f3f3f;
             Akutonet.cards.push(card);
+        }
+        
+        for (var i=0; i<4; i++) {
+            
+            (function(game,targetSprite){
+                var card = game.game.add.tileSprite(1080/4*(i+1)-1080/8,game.world.centerY-300,169,238, "cards",suit[i]);
+                game.physics.arcade.enable([ card, targetSprite ], Phaser.Physics.ARCADE);
+                card.anchor.setTo(0.5,0.5);
+                card.inputEnabled = true;
+                card.input.enableDrag();
+                card.originalPosition = card.position.clone();
+                card.events.onDragStop.add(function(currentSprite){
+                    var endSprite = targetSprite;
+                    var flg = game.physics.arcade.overlap(currentSprite, endSprite, function() {
+                        currentSprite.input.draggable = false;
+                        currentSprite.position.copyFrom(endSprite.position); 
+                        currentSprite.anchor.setTo(endSprite.anchor.x, endSprite.anchor.y); 
+                    });
+                
+                    if (!flg) {
+                        currentSprite.position.copyFrom(currentSprite.originalPosition);
+                    } else {
+                        setTimeout(function(){
+                            currentSprite.input.draggable = true;
+                            currentSprite.position.copyFrom(currentSprite.originalPosition);
+                        },1000);
+                    }
+                },this);
+                Akutonet.cards.push(card);
+            })(this,Akutonet.cards[i]);
         }
         
         
         
-        Akutonet.cursors = this.game.input.keyboard.createCursorKeys();
+        // Akutonet.cursors = this.game.input.keyboard.createCursorKeys();
 
         
         this.hueso = this.game.add.sprite(this.game.world.centerX, this.game.world.height, 'hueso');
