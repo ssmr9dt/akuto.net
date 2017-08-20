@@ -47,6 +47,8 @@ Akutonet.Boot.prototype = {
       this.game.load.image("frame", frame);
       
       this.game.load.script("webfont", "//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js");
+      
+      this.game.load.image("balloon", "assets/balloon.png");
     },
     
     create: function(){
