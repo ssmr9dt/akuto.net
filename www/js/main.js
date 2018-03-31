@@ -1,12 +1,10 @@
 /* global Phaser */
 /* global Akutonet */
 (function(){
-
     const $stage = document.getElementById("stage");
-    var physicalScreenWidth = window.screen.width * window.devicePixelRatio;
-    var physicalScreenHeight = window.screen.height * window.devicePixelRatio;
-    const w = physicalScreenWidth;//1080;
-    const h = physicalScreenHeight;//1920;
+    
+    const h = 1920;
+    const w = (h / window.innerHeight) * window.innerWidth;
     const game = new Phaser.Game(w, h, Phaser.AUTO, $stage);
     
     game.state.add("Boot", Akutonet.Boot);
